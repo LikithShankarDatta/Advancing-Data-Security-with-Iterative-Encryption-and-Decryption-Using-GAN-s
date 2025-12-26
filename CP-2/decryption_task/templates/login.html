@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="header">
+    🔐 Secure Chat Messenger
+</div>
+<div class="content" style="justify-content: center;">
+    {% if error %}
+    <div
+        style="background: linear-gradient(135deg, #ff6b6b, #ee5a6f); color: white; padding: 12px 16px; border-radius: 12px; text-align: center; margin-bottom: 20px; font-size: 0.9em; animation: shake 0.5s;">
+        {{ error }}</div>
+    <style>
+        @keyframes shake {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            25% {
+                transform: translateX(-10px);
+            }
+
+            75% {
+                transform: translateX(10px);
+            }
+        }
+    </style>
+    {% endif %}
+
+    <form id="authForm" method="POST" action="/login">
+        <input type="hidden" name="action" id="action" value="signin">
+
+        <div class="form-group">
+            <input type="text" name="username" placeholder="Username" required autofocus>
+        </div>
+        <div class="form-group">
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+
+        <button type="submit" id="submitBtn">Sign In</button>
+    </form>
+
+    <div style="text-align: center;">
+        <button type="button" class="link-btn" onclick="toggleMode()">Don't have an account? Sign up</button>
+    </div>
+</div>
+
+<script>
+    let isSignup = false;
+
+    function toggleMode() {
+        isSignup = !isSignup;
+        const action = document.getElementById('action');
+        const btn = document.getElementById('submitBtn');
+        const toggleBtn = document.querySelector('.link-btn');
+
+        if (isSignup) {
+            action.value = 'signup';
+            btn.textContent = 'Sign Up';
+            toggleBtn.textContent = 'Already have an account? Sign in';
+        } else {
+            action.value = 'signin';
+            btn.textContent = 'Sign In';
+            toggleBtn.textContent = "Don't have an account? Sign up";
+        }
+    }
+</script>
+{% endblock %}
